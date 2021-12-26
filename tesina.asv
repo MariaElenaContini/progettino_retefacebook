@@ -19,16 +19,17 @@ end
 G=graph(Adj);
 plot(G)
 
+%%% Confronto importanza dei nodi tenendo conto del Pwc e il grado dei nodi
+
 % PWC
-importancePwc=pairwiseconnectivity(Adj,n);
+[importancePwc]=pairwiseconnectivity(Adj,n);
 
 figure()
 stem(importancePwc)
 hold on
 
 % grado dei nodi
-importanceDegree=degree(Adj);
-
-stem(importanceDegree,'r')
+importanceGrado=G
+stem(importanceGrado,'r')
 
 

@@ -12,6 +12,4 @@ Fonte dei dati presi in considerazione:
 
 Analisi effettuate:
 
-- Pairwise connectivity, facendo il confronto tra l'importanza dei nodi se si considera l' nPwc e l'importanza se si considera come criterio il grado dei nodi
--
 
