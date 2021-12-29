@@ -19,23 +19,23 @@ end
 G=graph(Adj);
 plot(G)
 
-% CENTRALITA' PWC
-% dipende da quanto il grafo rimane connesso se elimino quel nodo
-importancePwc=pairwiseconnectivity(Adj,n);
+% % CENTRALITA' PWC
+% % dipende da quanto il grafo rimane connesso se elimino quel nodo
+% importancePwc=pairwiseconnectivity(Adj,n);
+% 
+% figure()
+% stem(importancePwc)
+% hold on
+% 
+% % CENTRALITA' DI GRADO:
+% % dipende dal grado del nodo, quando piu è grande il suo grado tanto più il
+% % nodo è importante
+% importanceDegree=degree(Adj);
+% 
+% stem(importanceDegree,'r')
 
-figure()
-stem(importancePwc)
-hold on
-
-% CENTRALITA' DI GRADO:
-% dipende dal grado del nodo, quando piu è grande il suo grado tanto più il
-% nodo è importante
-importanceDegree=degree(Adj);
-
-stem(importanceDegree,'r')
-
-% CENTRALITA' rispetto alla CLOSENESS
-% indica quanto un nodo è vicino agli altri nodi della rete
+% coef di Clustering medio
+[C]=coefClusteringMedio(Adj);
 
 % CENTRALITA' con metodo degli AUTOVETTORI
 % un nodo è tanto piu importante tanto è collegato a nodi altrettanto importanti 

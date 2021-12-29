@@ -1,6 +1,6 @@
 # progettino_retefacebook
 
-Questo progetto ha come obiettivo quello di fare l'analisi di una rete in cui i nodi sono dei politici americani e i link sono dati dall'interazione tra di loro su Facebook, tramite il "LIKE" di uno all'altro.
+Questo progetto ha come obiettivo quello di fare l'analisi di una rete in cui i nodi sono dei politici e i link sono dati dall'interazione tra di loro su Facebook, tramite il "LIKE" di uno all'altro.
 Per semplicità si considera questo grafo un grafo indiretto.
 
 Fonte dei dati presi in considerazione:
