@@ -1,4 +1,4 @@
-function [C]=coefClusteringMedio(A)
+function [C,C_mean]=coefClusteringMedio(A)
 n=size(A,1);
 c=zeros(n,1);
 for i=1:n
@@ -18,5 +18,6 @@ for i=1:n
         c(i)=(2*L)/(length(vicini_di_i)*(length(vicini_di_i)-1));
     end
 end
-C=mean(c);
+C=c;
+C_mean=mean(C);
 end

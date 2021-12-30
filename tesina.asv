@@ -20,7 +20,6 @@ G=graph(Adj);
 plot(G)
 
 d=sum(Adj'); % vettore dei gradi
-pd1 = createFit(d); % come si distribuiscono i gradi dei nodi -> dist logaritmica
 
 nodi_importanti=10; 
 vettore_nodi_piu_collegati=[];
@@ -37,8 +36,10 @@ end
 importancePwc=pairwiseconnectivity(Adj,vettore_nodi_piu_collegati);
 importanceDegree=vettore_gradi_max/max(d);
 
-[C,C_mean]=coefClusteringMedio(Adj);
+pd1 = createFit(d); % come si distribuiscono i gradi dei nodi -> dist logaritmica
+
 %[R]=plot3d(Adj); 
+c=[1:1:10];
 
 %N_CLUSTER=
 %[CENTER, U, OBJ_FCN] = fcm(Adj, N_CLUSTER)
