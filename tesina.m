@@ -7,6 +7,11 @@ ARCHI=ARCHI+1;
 ntemp= max(ARCHI);
 n= max(ntemp(1:2));
 
+nodi=importdata('fb-pages-politician_nodes.txt');
+Name=nodi.textdata(2:end,2);
+ID=nodi.data;
+T=table(Name,ID); % tabella dei nomi
+
 Adj= zeros(n,n);
 
 for i= 1:length(ARCHI)
