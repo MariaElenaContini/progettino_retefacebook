@@ -47,7 +47,8 @@ importancePwc=pairwiseconnectivity(Adj,vettore_nodi_piu_collegati);
 importanceDegree=vettore_gradi_max/max(d);
 confronto_importanza=table(Nomi_nodi,importanceDegree,importancePwc);
 
-[C,C_mean]=coefClusteringMedio(Adj);
+[C]=coefClusteringMedio(Adj);
+[e]=EigenvalueConnectivity(Adj);
 %[R]=plot3d(Adj); 
 
 %N_CLUSTER=

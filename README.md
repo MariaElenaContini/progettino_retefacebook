@@ -12,4 +12,10 @@ Fonte dei dati presi in considerazione:
 
 Analisi effettuate:
 
+- Trovato e tracciato il grafo
+- Definita la distribuzione del grado - usando il tool di Matlab: 'dfittool'
+- Considerando i 10 nodi più collegati abbiamo confrontato l'importanza di questi ottenuta tramite due metodi:
+	+ Considerando il grado
+	+ Considerando la Pairwise Connectivity
+- Calcolo del coefficiente di Clustering medio per conoscere il grado di connettività del grafo
 
