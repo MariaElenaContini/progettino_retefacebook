@@ -26,6 +26,14 @@ G=graph(Adj);
 plot(G)
 
 d=sum(Adj'); % vettore dei gradi
+
+mean_degree=mean(d);
+max_degree=max(d);
+min_degree=min(d);
+
+[closeness] = closeness(Adj);
+mean_closeness= mean(closeness);
+
 figure()
 pd1 = createFit(d); % come si distribuiscono i gradi dei nodi -> dist logaritmica
 
@@ -45,11 +53,23 @@ for k=1:nodi_importanti
 end
 importancePwc=pairwiseconnectivity(Adj,vettore_nodi_piu_collegati);
 importanceDegree=vettore_gradi_max/max(d);
-confronto_importanza=table(Nomi_nodi,importanceDegree,importancePwc);
+closeness_nodi_piu_collegati=[];
+for i=1:length(vettore_nodi_piu_collegati)
+    closeness_nodi_piu_collegati=[closeness_nodi_piu_collegati;closeness(vettore_nodi_piu_collegati(i))];
+end
+
+% creazione di una tabella per il confronto dei dati ottenuti:
+confronto_importanza=table(Nomi_nodi,importanceDegree,importancePwc,closeness_nodi_piu_collegati);
+x=[1:1:10];
+figure()
+plot(x,importanceDegree,'-r')
+hold on
+plot(x,importancePwc,'-b')
+plot(x,closeness_nodi_piu_collegati,'-g')
+axis([1 10 0 1.5]);
+ylabel('Valore');
+xlabel('Nodo');
 
 [C]=coefClusteringMedio(Adj);
 [e]=EigenvalueConnectivity(Adj);
-%[R]=plot3d(Adj); 
 
-%N_CLUSTER=
-%[CENTER, U, OBJ_FCN] = fcm(Adj, N_CLUSTER)
