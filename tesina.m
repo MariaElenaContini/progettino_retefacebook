@@ -74,6 +74,10 @@ axis([1 10 0 1.5]);
 ylabel('Valore');
 xlabel('Nodo');
 
+%%
+
+
+
 %% Connettività del grafo
 % Coefficiente di clustering Medio e il rapporto lamba due/ lamba n
 [c]=coefClusteringMedio(Adj,G);
