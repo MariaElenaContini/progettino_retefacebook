@@ -25,7 +25,7 @@ figure()
 G=graph(Adj);
 plot(G)
 
-d=sum(Adj'); % vettore dei gradi
+degree=sum(Adj'); % vettore dei gradi
 
 mean_degree=mean(d);
 max_degree=max(d);
@@ -34,9 +34,11 @@ min_degree=min(d);
 [closeness] = closeness(Adj);
 mean_closeness= mean(closeness);
 
+%% Distribuzione del grafo
 figure()
 pd1 = createFit(d); % come si distribuiscono i gradi dei nodi -> dist logaritmica
 
+%% Confronto importanza dei nodi
 nodi_importanti=10; 
 vettore_nodi_piu_collegati=[];
 d_temp=d;
@@ -60,12 +62,48 @@ end
 
 % creazione di una tabella per il confronto dei dati ottenuti:
 confronto_importanza=table(Nomi_nodi,importanceDegree,importancePwc,closeness_nodi_piu_collegati);
-x=[0:0.1:1];
-plot(x,)
-[C]=coefClusteringMedio(Adj);
+x=[1:1:10];
+figure()
+plot(x,importanceDegree,'-r')
+hold on
+plot(x,importancePwc,'-b')
+plot(x,closeness_nodi_piu_collegati,'-g')
+axis([1 10 0 1.5]);
+ylabel('Valore');
+xlabel('Nodo');
+
+%% Connettività del grafo
+% Coefficiente di clustering Medio e il rapporto lamba due/ lamba n
+[c]=coefClusteringMedio(Adj);
 [e]=EigenvalueConnectivity(Adj);
 
-%[R]=plot3d(Adj); 
 
-%N_CLUSTER=
-%[CENTER, U, OBJ_FCN] = fcm(Adj, N_CLUSTER)
+%% Clustering kmeans 
+
+% Verifichiamo il numero ottimo per effetuare un clustering kmeans
+eva = evalclusters(ARCHI,'kmeans','CalinskiHarabasz','KList',1:6);
+
+[idx,C] = kmeans(ARCHI,3);
+figure()
+
+plot(ARCHI(idx==1,1),ARCHI(idx==1,2),'r.','MarkerSize',12)
+
+hold on
+
+plot(ARCHI(idx==2,1),ARCHI(idx==2,2),'b.','MarkerSize',12)
+
+plot(ARCHI(idx==3,1),ARCHI(idx==3,2),'g-','MarkerSize',12)
+
+plot(C(:,1),C(:,2),'kx','MarkerSize',15,'LineWidth',3)
+
+legend('Cluster 1','Cluster 2','Cluster 3','Centroids','Location','NW')
+
+title 'Cluster Assignments and Centroids'
+
+hold off
+
+%% Minumum Spanning Tree
+MST = minspantree(G);
+figure()
+plot(MST)
+
