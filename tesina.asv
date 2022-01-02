@@ -1,4 +1,4 @@
-clear all
+eclear all
 close all
 clc
 %%% Grafo indiretto
@@ -31,8 +31,8 @@ mean_degree=mean(degree);
 max_degree=max(degree);
 min_degree=min(degree);
 
-link= G.numedges;
-density=(2*link)/(n*(n-1));
+[closeness] = closeness(Adj);
+mean_closeness= mean(closeness);
 
 %% Distribuzione del grafo
 figure()
@@ -56,8 +56,6 @@ end
 importancePwc=pairwiseconnectivity(Adj,vettore_nodi_piu_collegati);
 importanceDegree=vettore_gradi_max/max(degree);
 
-[closeness] = closeness(Adj);
-mean_closeness= mean(closeness);
 closeness_nodi_piu_collegati=[];
 
 for i=1:length(vettore_nodi_piu_collegati)
