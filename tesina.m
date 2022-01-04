@@ -33,13 +33,19 @@ min_degree=min(degree);
 
 link= G.numedges;
 density=(2*link)/(n*(n-1));
+%% Diametri
+d=distances(G);
+x=1:n;
+diam_i= max(d(x,:));
+figure()
+hist(diam_i)
 
 %% Distribuzione del grafo
 figure()
 pd1 = createFit(degree); % come si distribuiscono i gradi dei nodi -> dist logaritmica
 
 %% Confronto importanza dei nodi
-nodi_importanti=10; 
+nodi_importanti=15; 
 vettore_nodi_piu_collegati=[];
 d_temp=degree;
 vettore_gradi_max=[];
@@ -57,34 +63,48 @@ importancePwc=pairwiseconnectivity(Adj,vettore_nodi_piu_collegati);
 importanceDegree=vettore_gradi_max/max(degree);
 
 [closeness] = closeness(Adj);
-mean_closeness= mean(closeness);
 closeness_nodi_piu_collegati=[];
 
 for i=1:length(vettore_nodi_piu_collegati)
     closeness_nodi_piu_collegati=[closeness_nodi_piu_collegati;closeness(vettore_nodi_piu_collegati(i))];
 end
 
+[eig_centrality]=eigvectorcentrality(Adj,vettore_nodi_piu_collegati);
+
+
 % TABELLA per il confronto dei dati ottenuti:
-confronto_importanza=table(Nomi_nodi,importanceDegree,importancePwc,closeness_nodi_piu_collegati);
-x=[1:1:10];
+confronto_importanza=table(Nomi_nodi,importanceDegree,importancePwc,closeness_nodi_piu_collegati,eig_centrality);
+x=[1:1:nodi_importanti];
 figure()
 plot(x,importanceDegree,'-r')
 hold on
 plot(x,importancePwc,'-b')
 plot(x,closeness_nodi_piu_collegati,'-g')
+plot(x,eig_centrality,'-k')
 axis([1 10 0 1.5]);
 ylabel('Valore');
 xlabel('Nodo');
 
-%%
+%% Elimino i nodi più importanti:
 
+vettore_centri=[find(importanceDegree==1);find(importancePwc==1);...
+    find(closeness_nodi_piu_collegati==1);find(eig_centrality==1)];
+figure()
+highlight(plot(G),vettore_centri(3),'NodeColor','r','MarkerSize',10)
 
-
+vettori_nodi=[];
+figure()
+hold on
+for i=1:length(vettore_centri)
+    subplot(2,2,i)
+    G_copy=G;
+    G_copy=rmnode(G_copy,vettore_nodi_piu_collegati(vettore_centri(i)));
+    plot(G_copy)
+end
 %% Connettività del grafo
 % Coefficiente di clustering Medio e il rapporto lamba due/ lamba n
 [c]=coefClusteringMedio(Adj,G);
 [e]=EigenvalueConnectivity(Adj);
-
 
 %% Clustering kmeans 
 
@@ -109,9 +129,12 @@ legend('Cluster 1','Cluster 2','Cluster 3','Centroids','Location','NW')
 title 'Cluster Assignments and Centroids'
 
 hold off
-
-%% Minumum Spanning Tree
-MST = minspantree(G);
+%% Spanning tree a partire dai
 figure()
-plot(MST)
+hold on
+for i=1:length(vettore_centri)
+    subplot(2,2,i)
+    tree=shortestpathtree(G,vettore_nodi_piu_collegati(vettore_centri(i)));
+    plot(tree)
+end
 
