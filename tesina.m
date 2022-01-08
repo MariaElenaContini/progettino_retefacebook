@@ -121,8 +121,18 @@ for i=1:length(vettore_centri)
 end
 %% Connettività del grafo
 % Coefficiente di clustering Medio e il rapporto lamba due/ lamba n
-[c]=coefClusteringMedio(Adj,G);
+[c,c_i]=coefClusteringMedio(Adj,G);
 [e]=EigenvalueConnectivity(Adj);
+
+%% Confronto coefficienti di clustering rispetto al grado
+% i nodi di grado basso hanno c. clustering alto e viceversa
+% cioe i nodi di grado basso hanno vicini collegati tra loro 
+% e i nodi di grado alto hanno vicini poco connessi tra loro 
+% (un'altra proprieta simile alla scale free)
+figure()
+plot(degree,c_i)
+xlabel('Grado nodo')
+ylabel('Coefficiente Clustering')
 
 %% Clustering kmeans 
 

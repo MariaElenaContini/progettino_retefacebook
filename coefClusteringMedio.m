@@ -1,4 +1,4 @@
-function [C]=coefClusteringMedio(Adj,G)
+function [C,c_i]=coefClusteringMedio(Adj,G)
 degree= sum(Adj');
 n=size(Adj,1);
 c=zeros(n,1);% coef di clastering dei nodi
@@ -11,8 +11,12 @@ for i=1:n
         num_c= numedges(sub_graph);
         den_c=degree(i)*(degree(i)-1);
         c(i)= 2*num_c/den_c;
+        if c(i)>1
+            c(i)=1;
+        end
     end
 end
+c_i=c;
 C=mean(c);
 end 
 
