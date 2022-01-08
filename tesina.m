@@ -1,7 +1,9 @@
 clear all
 close all
 clc
+
 %%% Grafo indiretto
+
 ARCHI= importdata('fb-pages-politician_edges.txt');
 ARCHI=ARCHI+1;
 ntemp= max(ARCHI);
@@ -34,6 +36,9 @@ min_degree=min(degree);
 link= G.numedges;
 density=(2*link)/(n*(n-1));
 %% Diametri
+% Il cammino minimo più lungo che unisce una coppia di nodi in termine di
+% archi
+
 d=distances(G);
 x=1:n;
 diam_i= max(d(x,:));
@@ -45,6 +50,10 @@ figure()
 pd1 = createFit(degree); % come si distribuiscono i gradi dei nodi -> dist logaritmica
 
 %% Confronto importanza dei nodi
+% Poiche abbiamo a che fare con un grafo più o meno grande confrontiamo 15
+% nodi in base al loro grado, ovvero consideriamo i 15 nodi di grado più
+% alto
+
 nodi_importanti=15; 
 vettore_nodi_piu_collegati=[];
 d_temp=degree;
@@ -59,9 +68,14 @@ for k=1:nodi_importanti
     Nomi_nodi=[Nomi_nodi;T.Name(id)];
     d_temp(nodo)=-1;
 end
+
 importancePwc=pairwiseconnectivity(Adj,vettore_nodi_piu_collegati);
 importanceDegree=vettore_gradi_max/max(degree);
 
+%Closeness:
+% La somma dei cammini minimi per raggiungere tutti i nodi dall'i-esimo
+% nodo (Per ottenere l'importanza del nodo consideriamo l'inversa e 
+% normalizziamo rispetto il valore massimo)
 [closeness] = closeness(Adj);
 closeness_nodi_piu_collegati=[];
 
@@ -69,6 +83,9 @@ for i=1:length(vettore_nodi_piu_collegati)
     closeness_nodi_piu_collegati=[closeness_nodi_piu_collegati;closeness(vettore_nodi_piu_collegati(i))];
 end
 
+% Eigvector centrality: 
+% Più i nodi sono vicini a nodi importanti più sono a loro volta
+% importanti
 [eig_centrality]=eigvectorcentrality(Adj,vettore_nodi_piu_collegati);
 
 
@@ -89,6 +106,7 @@ xlabel('Nodo');
 
 vettore_centri=[find(importanceDegree==1);find(importancePwc==1);...
     find(closeness_nodi_piu_collegati==1);find(eig_centrality==1)];
+
 figure()
 highlight(plot(G),vettore_centri(3),'NodeColor','r','MarkerSize',10)
 
@@ -129,12 +147,12 @@ legend('Cluster 1','Cluster 2','Cluster 3','Centroids','Location','NW')
 title 'Cluster Assignments and Centroids'
 
 hold off
-%% Spanning tree a partire dai
-figure()
-hold on
-for i=1:length(vettore_centri)
-    subplot(2,2,i)
-    tree=shortestpathtree(G,vettore_nodi_piu_collegati(vettore_centri(i)));
-    plot(tree)
-end
+% %% Spanning tree a partire dai
+% figure()
+% hold on
+% for i=1:length(vettore_centri)
+%     subplot(2,2,i)
+%     tree=shortestpathtree(G,vettore_nodi_piu_collegati(vettore_centri(i)));
+%     plot(tree)
+% end
 
